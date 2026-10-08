@@ -11,6 +11,21 @@
       box-sizing: border-box;
     }
     
+    /* Google Form - Gửi lời chúc */
+.gift-form {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.gift-form iframe {
+  width: 100%;
+  min-height: 850px;
+  border: none;
+  border-radius: 15px;
+}
     body {
       background-color: #fff;
       font-family: 'Cambria', sans-serif;
@@ -453,7 +468,7 @@
         <!--<li><a href="#confirm" data-target="confirm">Xác nhận tham dự</a></li>-->
         <li><a href="album" data-target="album">Album</a></li>
         <li><a href="#map" data-target="map">Bản đồ</a></li>
-        <li><a href="#gift" data-target="gift">Mừng cưới</a></li>
+        <li><a href="#gift" data-target="gift">Gửi lời chúc</a></li>
       </ul>
     </nav>
 
@@ -538,12 +553,20 @@
 </section>
 
     
-    <!-- Section: Mừng cưới -->
-    <section id="gift" class="content-section">
-      <h2>Mừng cưới</h2>
-      <img src="img/qr.jpg" alt="QR mừng cưới" class="qrcode" />
-      <img src="img/qr_1.jpg" alt="QR mừng cưới" class="qrcode" />
-    </section>
+<!-- Section: Gửi lời chúc -->
+<section id="gift" class="content-section">
+  <h2>Gửi lời chúc phúc cho tụi mình nhé ^_^</h2>
+
+  <div class="gift-form">
+    <iframe
+      src="https://docs.google.com/forms/d/e/1FAIpQLSfgRCPxkTFkNYXRvUD83Po_oqnAonDsKv0_boiupglQRyzF8Q/viewform?embedded=true"
+      frameborder="0"
+      marginheight="0"
+      marginwidth="0">
+      Đang tải…
+    </iframe>
+  </div>
+</section>
 
     <!-- Section: Bản đồ -->
     <section id="map" class="content-section">
