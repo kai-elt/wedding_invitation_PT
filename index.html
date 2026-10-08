@@ -256,48 +256,89 @@
       z-index: 9;
     }
     
-    /* Curtain styles */
-    .curtain {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 9999;
-      display: flex;
-      pointer-events: none;
-    }
-    
-    .curtain-left,
-    .curtain-right {
-      width: 50%;
-      height: 100%;
-      transition: transform 1s ease;
-      z-index: 9999;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-    }
-    
-    .curtain-left {
-      background-image: url('./img/curtain left.jpg');
-      background-size: 100% 100%;   /* ép ảnh tràn đúng khung */
-      background-position: left center;
-    }
-    
-    .curtain-right {
-      background-image: url('./img/curtain right.jpg');
-      background-size: 100% 100%;   /* ép ảnh tràn đúng khung */
-      background-position: right center;
-    }
-    
-    .curtain.open .curtain-left {
-      transform: translateX(-100%);
-    }
-    
-    .curtain.open .curtain-right {
-      transform: translateX(100%);
-    }
+/* Modern single-image cinematic opening */
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  pointer-events: none;
+  background: #000;
+  opacity: 1;
+  transition: opacity 1.2s ease 0.15s;
+}
+
+.curtain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.03),
+      rgba(0,0,0,0.10) 50%,
+      rgba(0,0,0,0.22)
+    ),
+    url('./img/curtain.jpg') center center / contain no-repeat;
+
+  background-color: #df2d24;
+
+  transform: scale(0.96);
+  filter: saturate(0.9) brightness(0.92);
+
+  transition:
+    transform 2.4s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 2s ease;
+}
+
+.curtain.open::before {
+  transform: scale(1);
+  filter: saturate(1) brightness(1);
+}
+
+.curtain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: radial-gradient(
+    circle at center,
+    transparent 20%,
+    rgba(0,0,0,0.16) 72%,
+    rgba(0,0,0,0.32) 100%
+  );
+
+  opacity: 1;
+  transition: opacity 1.2s ease;
+}
+
+/* Khi mở thiệp */
+.curtain.open {
+  opacity: 0;
+}
+
+.curtain.open::before {
+  transform: scale(1);
+  filter: saturate(1);
+}
+
+.curtain.open::after {
+  opacity: 0;
+}
+
+/* Không sử dụng curtain trái/phải nữa */
+.curtain-left,
+.curtain-right {
+  display: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .curtain::before {
+    background-position: center center;
+  }
+}
     
     /* Form iframe */
     iframe {
@@ -395,10 +436,8 @@
 </head>
 <body>
   <!-- Hiệu ứng rèm-->
-  <div class="curtain">
-    <div class="curtain-left"></div>
-    <div class="curtain-right"></div>
-  </div>
+    <!-- Hiệu ứng mở đầu hiện đại: 1 ảnh duy nhất -->
+  <div class="curtain" aria-hidden="true"></div>
 
   <!-- Nhạc nền -->
   <audio id="wedding-audio" loop>
@@ -543,11 +582,10 @@
         });
           document.getElementById('home').style.display = 'block'; // hiện invitation
       }
-      
-      // Hiệu ứng rèm
+      // Hiệu ứng mở đầu cinematic
       setTimeout(() => {
-        document.querySelector('.curtain').classList.add('open');
-      }, 1000);
+         document.querySelector('.curtain').classList.add('open');
+      }, 1600);
       
       // Xử lý âm thanh
       function setupAudio() {
